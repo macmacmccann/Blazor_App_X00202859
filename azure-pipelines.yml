@@ -17,9 +17,10 @@ pr:
    - dev
    
 
-
-
-
 pool:
   vmImage: ubuntu-latest
 
+steps:
+- script: |
+      echo "Init"
+  displayName: '-'
