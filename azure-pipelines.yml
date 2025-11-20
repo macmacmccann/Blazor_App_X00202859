@@ -24,3 +24,31 @@ steps:
 - script: |
       echo "Init"
   displayName: '-'
+
+
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.0.0'
+  displayName: 'install NET SDK'
+
+- script: |
+    dotnet restore
+  displayName: 'Restore NuGet packages'
+
+- script: |
+   dotnet build --configuration Release /clp:ErrorsOnly
+  displayName: 'Build with errors only output'
+
+- script: | 
+     dotnet test --configuration Release /clp:ErrorsOnly
+  displayName: 'Test with errors only output'
+
+ #  Run static analysis 
+- script: |
+    dotnet tool install --global dotnet-format
+    dotnet format --verify-no-changes # dont change only verify 
+  displayName: 'Run static code analysis'
+
+
