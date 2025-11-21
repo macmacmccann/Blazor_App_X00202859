@@ -34,6 +34,7 @@ steps:
   displayName: 'install NET SDK'
 
 - script: |
+    cd 'application/'
     dotnet restore
   displayName: 'Restore NuGet packages'
 
