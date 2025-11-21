@@ -39,10 +39,12 @@ steps:
   displayName: 'Restore NuGet packages'
 
 - script: |
-   dotnet build --configuration Release /clp:ErrorsOnly
+    cd 'application/'
+    dotnet build --configuration Release /clp:ErrorsOnly
   displayName: 'Build with errors only output'
 
 - script: | 
+    cd 'application/'
      dotnet test --configuration Release /clp:ErrorsOnly
   displayName: 'Test with errors only output'
 
