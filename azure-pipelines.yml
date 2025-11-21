@@ -44,7 +44,7 @@ steps:
   displayName: 'Build with errors only output'
 
 - script: | 
-    cd 'application/'
+     cd 'application/'
      dotnet test --configuration Release /clp:ErrorsOnly
   displayName: 'Test with errors only output'
 
@@ -52,7 +52,7 @@ steps:
 - script: |
     cd 'application/'
     dotnet tool install --global dotnet-format
-    dotnet format --verify-no-changes # dont change only verify 
+    dotnet format ./application.csproj --verify-no-changes # dont change only verify 
   displayName: 'Run static code analysis'
 
 
