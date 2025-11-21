@@ -50,6 +50,7 @@ steps:
 
  #  Run static analysis 
 - script: |
+    cd 'application/'
     dotnet tool install --global dotnet-format
     dotnet format --verify-no-changes # dont change only verify 
   displayName: 'Run static code analysis'
