@@ -1,0 +1,39 @@
+﻿
+@page "/specieslist"
+@inject HttpClient Http
+@using application.Components
+
+<h3>SpeciesList</h3>
+
+
+@if (species == null)
+{
+    <p> Loading .. </p>
+
+}
+else if (!species.Any())
+{
+    <p> No species found </p>
+}
+else
+{
+    <ul>
+        @foreach (var s in species )
+        {
+            <li> s.scientificName </li>
+        }
+    </ul>
+}
+
+
+@code {
+
+    List<Species> species;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=10");
+        species = response?.results ?? new List<Species>();
+    }
+
+}
