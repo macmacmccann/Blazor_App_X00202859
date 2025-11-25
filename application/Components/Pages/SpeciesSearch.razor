@@ -1,0 +1,68 @@
+﻿@page "/searchspecies"
+@inject HttpClient Http
+@using application.Components
+@using application.Components.Layout
+
+<h3>Discover species by their name </h3>
+
+
+<SpeciesSearchBar OnSearch="HandleSpeciesSearch" />
+
+
+
+@if (filteredSpecies?.Any() == true)
+{
+
+    <ul>
+        @foreach (var s in filteredSpecies)
+        {
+            <li> (@s.vernacularName)</li>
+        }
+    </ul>
+}
+else
+{
+    <p> No species matching species found </p>
+}
+
+
+@code {
+    List<Species> species = new();
+    List<Species> filteredSpecies = new();
+    // filteredSpecies.Clear();
+
+
+    private string currentSearch = "";
+
+    private async Task HandleSpeciesSearch(string searchText)
+
+    {       
+        currentSearch = searchText;
+
+        filteredSpecies = species.Where(s => !string.IsNullOrEmpty(s.vernacularName) && s.vernacularName.Contains(currentSearch, StringComparison.OrdinalIgnoreCase)).ToList();
+
+
+        if (string.IsNullOrWhiteSpace(currentSearch))
+        {
+            filteredSpecies = null;
+        }
+        else
+        {
+            filteredSpecies = species.Where(s => !string.IsNullOrEmpty(s.vernacularName) && s.vernacularName.Contains(currentSearch, StringComparison.OrdinalIgnoreCase)).ToList();
+
+
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("Loaded");
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=40");
+        species = response?.results ?? new List<Species>();
+        // filteredSpecies = new List<Species>(species);  //initally show all
+
+    }
+
+}
