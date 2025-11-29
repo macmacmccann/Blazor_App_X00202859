@@ -3,38 +3,39 @@
 @inject HttpClient Http
 @using application.Components
 @using application.Components.Layout
+@inject application.Services.SpeciesService SpeciesService;
 
 <h3>SpeciesList</h3>
 
 
 
 
-@if (species != null )
-{
-
-    <ul>
-        @foreach (var s in species)
+    <ul class= "gridlist">
+        @foreach (var s in SpeciesService.species )
         {
-            <li> @s.scientificName</li>
+            <li class="list">
+                <NavLink href=@($"/speciesdescription/{s.scientificName}")>
+                    @s.scientificName
+                </NavLink>
+            </li>
         }
+
     </ul>
-}
-else
-{
-    <p> No species matching species found </p>
 }
 
 
 @code {
-    List<Species> species = new();
+
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("Loaded");
-        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=40");
-        species = response?.results ?? new List<Species>();
+        await SpeciesService.LoadSpeciesAsync(Http);
+    }
+    //Scoped method non global api call 
+        //var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=40");
+        //species = response?.results ?? new List<Species>();
  
 
-    }
+    
 
 }

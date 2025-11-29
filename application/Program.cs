@@ -1,4 +1,5 @@
 using application.Components;
+using application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,10 +8,10 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https:/
 
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 
+builder.Services.AddScoped<SpeciesService>();
 
 builder.Services.AddCors(options =>
 {

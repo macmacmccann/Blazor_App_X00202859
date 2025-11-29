@@ -1,5 +1,6 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: mediumseagreen !important;
 }
 
 a, .btn-link {
@@ -48,4 +49,20 @@ h1:focus {
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
+}
+
+
+ul.gridlist {
+    display: grid;
+    gap: 10px;
+    list-style: none;
+    grid-template-columns: repeat(auto-fit,minmax(150px, 1fr));
+}
+girdlist li {
+
+    
+    padding-top:100px;
+    color:black;
+    text-align:center;
+    background-color:red;
 }

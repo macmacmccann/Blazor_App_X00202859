@@ -1,0 +1,82 @@
+﻿@page "/speciesdescription"
+@page "/speciesdescription/{selectedName}"
+@inject application.Services.SpeciesService SpeciesService;
+@inject HttpClient Http
+
+
+
+<h3>Species Description</h3>
+
+
+
+<ul class="gridlist">
+    @foreach (var s in SpeciesService.species)
+    {
+        <li class="list">
+            <NavLink href=@($"/speciesdescription/{s.scientificName}")>
+                @s.scientificName
+            </NavLink>
+        </li>
+    }
+
+</ul>
+
+
+
+
+
+
+@if (currentSpecies is not null)
+{
+  <h3> Current species var got  @currentSpecies.scientificName</h3>
+    <h3> @currentSpecies </h3>
+}
+else
+{
+    <p> Loading species details </p>
+}
+@if (!string.IsNullOrEmpty(selectedName))
+{
+    <h3> selected name  @selectedName </h3>
+
+    @if (currentSpecies != null)
+    {   
+
+    <h3> @currentSpecies</h3>
+
+        <h6> Belongs to Kingdom </h6>
+        <p>  @currentSpecies.kingdom </p>
+
+        
+            <h3> Phylum : @currentSpecies.phylum  </h3>
+  
+        
+
+    } else { <p> No species currently </p> }
+
+} else {  <p>No species found </p> }
+
+
+
+
+@code {
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await SpeciesService.LoadSpeciesAsync(Http);
+    }
+    [Parameter]
+    public string? selectedName { get; set; }
+    private Species? currentSpecies;
+    // Species.
+    protected override void OnParametersSet()
+
+    {
+        if (SpeciesService.species?.Any() == true) // null check 
+        {
+           currentSpecies = SpeciesService.species.FirstOrDefault(s => s.scientificName == selectedName); //returnas the first that equals such 
+        }
+    }
+
+}

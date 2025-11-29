@@ -1,0 +1,13 @@
+
+
+
+ {
+     <li class="list"> 
+         <NavLink href=@($"/speciesdescription/{s.scientificName}")>
+         @s.scientificName
+         </NavLink>
+         </li>
+ }
+
+
+ https://localhost:7058/speciesdescription/incertae%20sedis
