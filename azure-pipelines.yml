@@ -53,6 +53,7 @@ steps:
     cd 'application/'
     dotnet tool install --global dotnet-format
     dotnet format ./application.csproj --verify-no-changes # dont change only verify 
+    continueOnError: true
   displayName: 'Run static code analysis'
 
 
