@@ -61,7 +61,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         Console.WriteLine("Loaded");
-        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=40");
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=300");
         species = response?.results ?? new List<Species>();
         // filteredSpecies = new List<Species>(species);  //initally show all
 

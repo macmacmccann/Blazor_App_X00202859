@@ -14,14 +14,14 @@
         @foreach (var s in SpeciesService.species )
         {
             <li class="list">
-                <NavLink href=@($"/speciesdescription/{s.scientificName}")>
+                <NavLink href=@($"/speciesdescription/{s.scientificName}/{s.key}")>
                     @s.scientificName
                 </NavLink>
             </li>
         }
 
     </ul>
-}
+
 
 
 @code {

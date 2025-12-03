@@ -10,7 +10,7 @@ namespace application.Services
 
         public async Task LoadSpeciesAsync(HttpClient http)
         {
-           var response = await http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=40");
+           var response = await http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=100");
            species = response?.results ?? new List<Species>();
         }
 

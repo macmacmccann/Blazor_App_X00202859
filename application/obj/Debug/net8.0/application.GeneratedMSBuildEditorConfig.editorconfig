@@ -28,6 +28,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcU3BlY2llc1NlYXJjaEJhci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/ByPhylum.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCeVBoeWx1bS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -42,6 +46,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Species Description.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTcGVjaWVzIERlc2NyaXB0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Species DescriptionNested.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTcGVjaWVzIERlc2NyaXB0aW9uTmVzdGVkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/SpeciesList.razor]
