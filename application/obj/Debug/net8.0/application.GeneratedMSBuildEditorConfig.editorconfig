@@ -32,16 +32,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCeVBoeWx1bS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Kingdom.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xLaW5nZG9tLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Species Description.razor]
@@ -58,10 +58,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/SpeciesSearch.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTcGVjaWVzU2VhcmNoLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Routes.razor]

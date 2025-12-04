@@ -12,6 +12,8 @@ builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 
 builder.Services.AddScoped<SpeciesService>();
+builder.Services.AddScoped<WikipediaService>();
+
 
 builder.Services.AddCors(options =>
 {

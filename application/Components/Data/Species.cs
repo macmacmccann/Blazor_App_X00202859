@@ -9,12 +9,14 @@ public class Species
     public required string canonicalName { get; set; }
     //JsonPropertyName("vernacularName")] uncomment if its dif 
     public string? vernacularName { get; set; }  // laymans name used for search
-                                                 // 
     public string? kingdom { get; set; } // must contain null value when exiting construct
     public string? family { get; set; }
+    public string? genus { get; set; }
+    public string? species { get; set; }
     public string? status { get; set; }
     public int numDescendants { get; set; }
     public string? phylum { get; set; }
+
     public List<VernacularNames>? vernacularNames { get; set; }
 
     public class VernacularNames

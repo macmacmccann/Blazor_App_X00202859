@@ -1,11 +1,22 @@
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: mediumseagreen !important;
-}
+
 
 a, .btn-link {
     color: #006bb7;
 }
+
+.top-row.navbar.navbar-dark {
+    background-image: url("/images/backgroundBlur.gif"); !important;
+}
+
+.nav-scrollable {
+    background-image: url("/images/backgroundBlur.gif");
+    !important;
+    background-color: purple;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
 
 .btn-primary {
     color: #fff;
@@ -15,6 +26,7 @@ a, .btn-link {
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+
 }
 
 .content {
@@ -66,3 +78,47 @@ girdlist li {
     text-align:center;
     background-color:red;
 }
+
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    text-transform: uppercase !important;
+    font-family: "Work Sans",monospace;
+}
+
+
+
+body {
+    background-image: url("/images/backgroundBlur.gif");
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    letter-spacing: 3px;
+    text-transform: capitalize;
+    
+}
+    
+.nav-link{
+    transition: transform 0.2s ease-in-out;
+    text-decoration:none !important;
+}
+.nav-link:hover {
+    transform: scale(1.1);
+    text-decoration: none !important;
+}
+
+.list {
+    background-color: aliceblue;
+    border-radius : 2px;
+    
+}
+
+    .list:hover {
+        transform: scale(1.1);
+        text-decoration: none !important;
+    }
