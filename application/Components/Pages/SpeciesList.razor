@@ -4,14 +4,15 @@
 @using application.Components
 @using application.Components.Layout
 @inject application.Services.SpeciesService SpeciesService;
+@inject application.Services.WikipediaService WikipediaService;
+
 
 <h3>SpeciesList</h3>
 
 
 
-
     <ul class= "gridlist">
-        @foreach (var s in SpeciesService.species )
+    @foreach (var s in SpeciesService.species.Where(s => !string.IsNullOrEmpty(s.wikiImage)))
         {
             <li class="list">
                 <NavLink href=@($"/speciesdescription/{s.scientificName}/{s.key}")>
@@ -26,10 +27,16 @@
 
 @code {
 
+    private Species? currentSpecies;
+
+    private string? wikiImage;
+    private string? wikiExtract;
 
     protected override async Task OnInitializedAsync()
     {
         await SpeciesService.LoadSpeciesAsync(Http);
+        await SpeciesService.PopulateWithWikipedia(WikipediaService);
+
     }
     //Scoped method non global api call 
         //var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=40");

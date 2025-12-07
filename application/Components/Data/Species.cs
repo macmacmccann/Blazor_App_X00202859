@@ -2,6 +2,7 @@
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
+using System.Text.Json.Serialization; // for keyword class 
 public class Species
 {
     public required int key { get; set; }
@@ -10,12 +11,18 @@ public class Species
     //JsonPropertyName("vernacularName")] uncomment if its dif 
     public string? vernacularName { get; set; }  // laymans name used for search
     public string? kingdom { get; set; } // must contain null value when exiting construct
+    public string? phylum { get; set; }
+    [JsonPropertyName("class")]
+    public string? classOfSpecies { get; set; }
+    public string? order { get; set; }
     public string? family { get; set; }
+
     public string? genus { get; set; }
     public string? species { get; set; }
     public string? status { get; set; }
     public int numDescendants { get; set; }
-    public string? phylum { get; set; }
+    public string? wikiImage { get; set; }
+    public string? wikiExtract { get; set; }
 
     public List<VernacularNames>? vernacularNames { get; set; }
 
@@ -25,12 +32,7 @@ public class Species
         public string? language { get; set; }
     }
 
-
-    
-    
-
 }
-
 
 public class SpeciesSearchResponse
 {

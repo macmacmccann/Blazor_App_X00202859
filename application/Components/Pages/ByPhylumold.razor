@@ -1,0 +1,55 @@
+﻿
+
+@page "/byphylumold"
+@inject HttpClient Http
+@using application.Components
+@using application.Components.Layout
+@inject application.Services.SpeciesService SpeciesService;
+@inject application.Services.WikipediaService WikipediaService;
+
+
+
+
+
+
+<h3>By Phylum</h3>
+
+
+
+<ul class="gridlist">
+
+    @foreach (var s in species)
+    {
+        var englishName = s.vernacularNames?.FirstOrDefault(v => v.language?.StartsWith("en") == true)? //some have eng or en so startswith
+        .vernacularName ?? " "; // fallback with ??
+
+        <li>  @englishName <br /> @s.phylum  </li>
+   
+    }
+
+    </ul>
+
+
+
+
+@code {
+    List<Species> species = new();
+
+    private Species? currentSpecies;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        //Scoped method non global api call
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species/search?rank=PHYLUM&limit=100");
+        species = response?.results ?? new List<Species>();
+
+ 
+
+    }       
+
+      
+    
+  
+
+}

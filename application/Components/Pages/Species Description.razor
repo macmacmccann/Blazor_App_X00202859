@@ -11,49 +11,77 @@
 
 @if (!string.IsNullOrWhiteSpace(wikiExtract))
 {
-    <img src="@wikiImage" class="image" />
-    <p>@wikiExtract</p>
-
+<img src="@wikiImage" class="image" />
+<p>@wikiExtract</p>
 }
 
-@if (currentSpecies is not null)
-{
-    <h3> @currentSpecies.vernacularName  </h3>
 
-     <h1> @currentSpecies.scientificName</h1>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <h3> Kingdom : @currentSpecies.kingdom </h3>
-    <h3> Phylum : @currentSpecies.phylum  </h3>
-    <h3> Canonical Name : @currentSpecies.canonicalName  </h3>
+    @if (currentSpecies is not null)
+    {
+        <h3> @currentSpecies.vernacularName  </h3>
 
-    <h3> Family : @currentSpecies.family  </h3>
-    @if(currentSpecies.status is not null)
-    {<h3> Status : @currentSpecies.status  </h3>
-    } else { <h3> Current status unknown </h3> }
-    <h3> Number of known descendants of this kingdom : @currentSpecies.numDescendants  </h3>
+            <h1> @currentSpecies.scientificName</h1>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h3> Kingdom : @currentSpecies.kingdom </h3>
+        <h3> Phylum : @currentSpecies.phylum  </h3>
+        <h3> Canonical Name : @currentSpecies.canonicalName  </h3>
 
-}
-else
-{
-    <p> Loading species details </p>
-}
+        <h3> Family : @currentSpecies.family  </h3>
+        @if(currentSpecies.status is not null)
+        {<h3> Status : @currentSpecies.status  </h3>
+        } else { <h3> Current status unknown </h3> }
+        <h3> Number of known descendants of this kingdom : @currentSpecies.numDescendants  </h3>
 
+    }
+    else
+    {
+        <p> Species details not fully recorded </p>
+    }
+
+ 
 
 <ul class="gridlist">
     @foreach (var s in nestedspecies )
     {
    
         <li class="list">
-            @s.species
+            <NavLink href=@($"/singularspecies/{s.canonicalName}/{s.key}")>
+                @s.canonicalName
+            </NavLink>
+
+
         </li>
     }
 
 </ul>
+
+
+
+
+
+<ul class="gridlist">
+    @foreach (var s in SpeciesService.species.Where(s => !string.IsNullOrEmpty(s.wikiImage)))
+    {
+        <li class="list">
+            <NavLink href=@($"/speciesdescription/{s.scientificName}/{s.key}")>
+                @s.scientificName
+            </NavLink>
+        </li>
+    }
+
+</ul>
+
+
+
+
+
+
+
 
 @code {
 
@@ -69,22 +97,25 @@ else
         var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>($"https://api.gbif.org/v1/species/search?rank=species&parentKey={taxonkey}&limit=40");
         //var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>($"https://api.gbif.org/v1/species?rank=SPECIES&highertaxon_key={taxonkey}&limit=40");
         nestedspecies = response?.results ?? new List<Species>();
-        Console.WriteLine("https://api.gbif.org/v1/species?rank=SPECIES&highertaxon_key={taxonkey}&limit=40");
 
 
       var (image, extract) = await WikipediaService.GetInfoAsync(selectedName);
  
         wikiImage = image;
         wikiExtract = extract;
-
-
-
     }
+
+
+
     [Parameter]
     public string? selectedName { get; set; }
     [Parameter]
     public string taxonkey { get; set; }
+
     private Species? currentSpecies;
+
+
+
    // private string realname = currentSpecies.vernacularName;
 
 

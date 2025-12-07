@@ -14,5 +14,24 @@ namespace application.Services
            species = response?.results ?? new List<Species>();
         }
 
+
+
+        public async Task PopulateWithWikipedia(WikipediaService wiki )
+        {
+            
+            foreach(var s in species)
+            {
+                var (image, extract) = await wiki.GetInfoAsync(s.scientificName);
+                
+                s.wikiImage = image;
+                s.wikiExtract = extract;
+
+            }
+        }
+
     }
+
+
+
+
 }

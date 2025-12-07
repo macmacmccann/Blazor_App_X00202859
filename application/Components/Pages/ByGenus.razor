@@ -1,4 +1,4 @@
-﻿@page "/byphylum"
+﻿@page "/bygenus"
 @inject HttpClient Http
 @using application.Components
 @using application.Components.Layout
@@ -7,20 +7,20 @@
 
 
 
-<h3>Kingdom</h3>
+<h3>All Genus </h3>
 
 
 
 
 
 <ul class="gridlist">
-    @foreach (var s in phylum)
+    @foreach (var s in genus)
     {
 
         <li class="list">
 
             <NavLink href=@($"/rankdescription/{s.canonicalName}/{s.key}")>
-                @s.phylum
+                @s.genus
             </NavLink>
         </li>
     }
@@ -32,17 +32,17 @@
 
     // $"https://api.gbif.org/v1/species/{key}/children" eg., key 1 lists all phyum under animalia
 
-    List<Species> phylum = new();
+    List<Species> genus = new();
 
 
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=PHYLUM&status=ACCEPTED&limit=100");
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=KINGDOM&status=ACCEPTED&limit=100");
         //  kingdom = response?.results ?? new List<Species>();
 
-        phylum = response?.results
-        .GroupBy(s => s.phylum)
+        genus = response?.results
+        .GroupBy(s => s.genus)
         .Select(g => g.First())
         .ToList() ?? new();
     }

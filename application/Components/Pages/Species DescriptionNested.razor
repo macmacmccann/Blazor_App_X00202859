@@ -2,7 +2,7 @@
 @page "/speciesdescriptionnested/{selectedName}"
 @inject application.Services.SpeciesService SpeciesService;
 @inject HttpClient Http
-
+@inject application.Services.WikipediaService WikipediaService;
 
 
 @if (currentSpecies is not null)

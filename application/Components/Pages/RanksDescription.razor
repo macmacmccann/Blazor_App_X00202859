@@ -1,0 +1,118 @@
+﻿@page "/rankdescription"
+@page "/rankdescription/{selectedRank}/{rankKey}"
+@inject application.Services.SpeciesService SpeciesService;
+@inject HttpClient Http
+@using application.Components
+@inject application.Services.WikipediaService WikipediaService;
+
+
+<h1> @selectedRank</h1>
+
+
+@if (!string.IsNullOrWhiteSpace(wikiExtract))
+{
+    <img src="@wikiImage" class="image" />
+    <p>@wikiExtract</p>
+}
+
+
+@if (currentSpecies is not null)
+{
+ 
+    <h3> Number of known descendants of this kingdom : @currentSpecies.numDescendants  </h3>
+
+}
+else
+{
+    <p> Details not fully recorded </p>
+}
+
+
+
+<ul class="gridlist">
+    @foreach (var s in nestedspecies)
+    {
+
+        <li class="list">
+            <NavLink href=@($"/singularspecies/{s.canonicalName}/{s.key}")>
+                @s.canonicalName
+            </NavLink>
+
+
+        </li>
+    }
+
+</ul>
+
+
+
+
+
+<ul class="gridlist">
+    @foreach (var s in SpeciesService.species.Where(s => !string.IsNullOrEmpty(s.wikiImage)))
+    {
+        <li class="list">
+            <NavLink href=@($"/speciesdescription/{s.scientificName}/{s.key}")>
+                @s.scientificName
+            </NavLink>
+        </li>
+    }
+
+</ul>
+
+
+
+
+
+
+
+
+@code {
+
+    List<Species> nestedspecies = new();
+
+    private string? wikiImage;
+    private string? wikiExtract;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await SpeciesService.LoadSpeciesAsync(Http);
+
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>($"https://api.gbif.org/v1/species/search?rank=SPECIES&highertaxonKey={rankKey}&limit=100");
+        nestedspecies = response?.results ?? new List<Species>();
+
+
+        var (image, extract) = await WikipediaService.GetInfoAsync(selectedRank);
+
+        wikiImage = image;
+        wikiExtract = extract;
+    }
+
+
+
+    [Parameter]
+    public string? selectedRank { get; set; }
+    [Parameter]
+    public string? rankKey { get; set; }
+
+    private Species? currentSpecies;
+
+
+
+    // private string realname = currentSpecies.vernacularName;
+
+
+
+
+    protected override void OnParametersSet()
+
+    {
+        if (SpeciesService.species?.Any() == true) // null check
+        {
+            currentSpecies = SpeciesService.species.FirstOrDefault(s => s.scientificName == selectedRank); //returnas the first that equals such
+
+        }
+    }
+
+}
+

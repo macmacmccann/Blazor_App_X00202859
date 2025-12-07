@@ -1,0 +1,61 @@
+﻿
+
+@page "/singularspecies"
+@page "/singularspecies/{selectedName}/{key}"
+@inject HttpClient Http
+@using application.Components
+@using application.Components.Layout
+@inject application.Services.SpeciesService SpeciesService;
+@inject application.Services.WikipediaService WikipediaService;
+
+<button class="back" onclick="history.back">  ⇠ BACK </button>
+
+<h3>@selectedName</h3>
+
+@if (selectedspecies is not null)
+{
+    <h3> @selectedspecies.vernacularName  </h3>
+
+    <h3> Kingdom : @selectedspecies.kingdom </h3>
+    <h3> Phylum : @selectedspecies.phylum  </h3>
+    <h3> Class : @selectedspecies.classOfSpecies  </h3>
+    <h3> Order : @selectedspecies.order </h3>
+    <h3> Family : @selectedspecies.family </h3>
+    <h3> Genus : @selectedspecies.genus </h3>
+
+    <h3> Number of known descendants of this kingdom : @selectedspecies.numDescendants  </h3>
+
+}
+else
+{
+    <p> Species details not fully recorded </p>
+}
+
+
+
+
+
+@code {
+    private Species? selectedspecies;
+
+    [Parameter]
+    public string? selectedName { get; set; }
+    [Parameter]
+    public string? key { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+     
+
+
+        selectedspecies = await Http.GetFromJsonAsync<Species>($"https://api.gbif.org/v1/species/{key}");
+
+
+
+    }
+
+
+
+
+}

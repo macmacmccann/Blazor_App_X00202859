@@ -28,8 +28,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcU3BlY2llc1NlYXJjaEJhci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/ByFamily.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCeUZhbWlseS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/ByGenus.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCeUdlbnVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/ByKingdom.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCeUtpbmdkb20ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/ByOrder.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCeU9yZGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/ByPhylum.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCeVBoeWx1bS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/ByPhylumold.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCeVBoeWx1bW9sZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Error.razor]
@@ -40,8 +60,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Kingdom.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xLaW5nZG9tLnJhem9y
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/RanksDescription.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSYW5rc0Rlc2NyaXB0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/SingularSpecies.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaW5ndWxhclNwZWNpZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/Species Description.razor]
