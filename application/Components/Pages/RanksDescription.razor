@@ -17,9 +17,33 @@
         <div class="row">
 
             <div class = "col">
-                <img class="profileof" src="@wikiImage" />
+
+
+                @if (!string.IsNullOrEmpty(@wikiImage))
+                {
+                    <img class="profileof" src="@wikiImage" />
+
+                }
+                else
+                {
+                    <img class="profileof" src="/images/unrecordedAsOfNow.jpg" />
+                    <div class="noimage">
+                        <h3> No image in any API, be the first to record this rank !</h3>
+
+
+                    </div>
+
+                }
+
 
             </div>
+
+
+
+
+         
+
+
             <div class="col">
                 <p class="extract">@wikiExtract</p>
             </div>
@@ -30,16 +54,7 @@
 }
 
 
-@if (currentSpecies is not null)
-{
- 
-    <h3> Number of known descendants of this kingdom : @currentSpecies.numDescendants  </h3>
 
-}
-else
-{
-    <p> Details of this rank are not fully recorded with relevant information . See below the specific species of this rank to get a further view </p>
-}
 
 
 

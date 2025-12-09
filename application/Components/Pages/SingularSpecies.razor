@@ -12,7 +12,15 @@
 
 <button class="back" onclick="history.back()">  ⇠ BACK </button>
 
-<h3>@selectedName</h3>
+
+                    <div class="explainNicely">
+
+    <h3>@selectedName</h3>
+
+                    </div>
+<br />
+<br />
+
 
 
 
@@ -22,7 +30,27 @@
         <div class="row">
 
             <div class="col">
-                <img class="profileof" src="@wikiImage" />
+
+
+
+
+                @if (!string.IsNullOrEmpty(@wikiImage))
+                {
+                    <img class="profileof" src="@wikiImage" />
+
+                }
+                else
+                {
+                    <img class="profileof" src="/images/frown.jpg" />
+                    <div class="noimage">
+                    <h3> Still no real records on the web ! Be the first to document it !</h3>
+
+                    </div>
+
+                }
+                
+
+
 
             </div>
             <div class="col">
@@ -31,7 +59,11 @@
 
                 @if (selectedspecies is not null)
                 {
+                    <div class="explainNicely">
 
+
+
+                 
 
                     <NavLink href=@($"/rankdescription/{selectedspecies.familykey}")>
                         <h3> Family : @selectedspecies.family </h3>
@@ -48,9 +80,13 @@
 
 
 
-                    <h3> Genus : @selectedspecies.genus </h3>
 
-                    <h3> Number of known descendants of this kingdom : @selectedspecies.numDescendants  </h3>
+
+
+
+                    </div>
+                    <br />
+
 
                 }
                 else
@@ -62,28 +98,49 @@
 
             </div>
 
+            @if (selectedspecies is not null){
+
+                    @if (selectedspecies.numDescendants == 0)
+                    {
+                        <br />
+                    <div class="explainNicely">
+
+
+                        <h3> Number of known descendants of this kingdom : @selectedspecies.numDescendants  </h3>
+                    </div>
+                }
+                else
+                {
+                    <br />
+
+                    <div class="explainNicely">
+                        <h1> Find out more about descendants down below </h1>
+                    </div>
+
+                }
+            }
+
 
         </div>
     </div>
 }
 
 
+
+
 <ul class="gridlist">
     @foreach (var s in nestedspecies)
     {
-        countOfSubSpecies += 1;
         <li class="list">
             <NavLink href=@($"/subspecies/{s.species}/{s.nubkey}/{selectedRank}")>
-                Direct child of @s.species Number : @countOfSubSpecies
+                Direct child of @s.species
             </NavLink>
 
-
         </li>
+
     }
 
 </ul>
-
-
 
 @code {
     private Species? selectedspecies;
