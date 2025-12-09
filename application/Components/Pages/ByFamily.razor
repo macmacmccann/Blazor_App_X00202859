@@ -12,9 +12,12 @@
 
 
 
-<h3>FAMILies</h3>
+<div class="explainNicely">
+    <h1> EXPLORE THE FAMILIES OF THE BIOLOGICAL CLASSIFICATION RANKS </h1>
+</div>
+<br />
 
-<button class="api" @onclick="LoadNextPage"> Retrieve more sample data from the API to gain more accuracy </button>
+<button class="api" @onclick="LoadNextPage">Retrieve more sample data from the API to gain more accuracy</button>
 
 
 
@@ -35,11 +38,10 @@
     private int offset = 0;
     private const int pageSize = 1000;
     private HashSet<string> shownFamilies = new();
-    // List<Species> filteredfamily = new();
+    // List<Species> filteredspecies = new();
 
 
 
-    private int buttonworksifgoesup = 1;
 
     // $"https://api.gbif.org/v1/species/{key}/children" eg., key 1 lists all phyum under animalia
 
@@ -57,15 +59,7 @@
 
     private async Task LoadNextPage()
     {
-        /*buttonworksifgoesup += 1;
-        stateof.buttonCount++;
-        stateof.filteredfamily.Add(new Species {
-            key = 2242,
-            scientificName = "test",
-            canonicalName = "test",
-            family = $"TEST FAMILY {stateof.buttonCount}" }
-        );
-        */
+      
 
         var url = $"https://api.gbif.org/v1/species/search?rank=SPECIES&limit={pageSize}&offset={offset}";
 

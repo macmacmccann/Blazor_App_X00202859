@@ -12,10 +12,14 @@
 <button class="back" onclick="history.back()">  ⇠ BACK </button>
 
 
-<h3>ORDERS </h3>
+
+<div class="explainNicely">
+    <h1> EXPLORE THE ORDERS OF THE BIOLOGICAL CLASSIFICATION RANKS </h1>
+</div>
+<br />
 
 
-<button class ="api" @onclick="LoadNextPage"> Retrieve more sample data from the API to gain more accuracy </button>
+<button class ="api" @onclick="LoadNextPage">Retrieve more sample data from the API to gain more accuracy</button>
 
 
 
@@ -25,7 +29,7 @@
 
         <li class="list">
 
-            <NavLink href=@($"/rankdescription/{s.order}/{s.orderkey}")>
+            <NavLink href=@($"/rankdescription/{s.order}/{s.key}")>
                 @s.order
             </NavLink>
         </li>

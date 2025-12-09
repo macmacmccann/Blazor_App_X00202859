@@ -1,0 +1,106 @@
+﻿
+@page "/specieslistnofilter"
+@inject HttpClient Http
+@using application.Components
+@using application.Components.Layout
+@inject application.Services.SpeciesService SpeciesService;
+@inject application.Services.WikipediaService WikipediaService;
+
+
+<button class="back" onclick="history.back()">  ⇠ BACK </button>
+<br />
+<button class="api" @onclick="LoadNextPage">Retrieve more sample data from the API to gain more accuracy</button>
+
+
+<div class="explainNicely">
+    <h4> EXPLORE THE SPECIES OF THE BIOLOGICAL CLASSIFICATION RANKS </h4>
+</div>
+
+<div class="explainNicely">
+    <h1> WITH OR WITHOUT GOOD RECORDINGS -> ALL OF THEM  </h1>
+</div>
+
+<br />
+
+
+
+    <ul class= "gridlist">
+    @foreach (var s in filteredspecies)
+        {
+            <li class="list">
+                <NavLink href=@($"/speciesdescription/{s.scientificName}/{s.key}")>
+                    @s.scientificName
+                </NavLink>
+            </li>
+        }
+
+    </ul>
+
+
+
+@code {
+
+
+
+
+    private Species? currentSpecies;
+
+    private string? wikiImage;
+    private string? wikiExtract;
+
+
+    private int offset = 0;
+    private const int pageSize = 1000;
+    private HashSet<string> shownSpecies = new();
+     List<Species> filteredspecies = new();
+    
+
+    List<Species> species = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadNextPage();
+
+
+    }
+
+    private async Task LoadNextPage()
+    {
+
+        var url = $"https://api.gbif.org/v1/species/search?rank=SPECIES&limit={pageSize}&offset={offset}";
+
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>(url);
+
+        species = response?.results
+        .Where(s => !string.IsNullOrWhiteSpace(s.scientificName))
+        .GroupBy(s => s.scientificName)
+        .Select(g => g.First())
+        .ToList() ?? new();
+
+        offset += pageSize;
+
+        foreach (var s in species)
+        {
+
+            if (shownSpecies.Add(s.scientificName!))
+            {
+                filteredspecies.Add(s);
+            }
+        }
+        await InvokeAsync(StateHasChanged);
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+}

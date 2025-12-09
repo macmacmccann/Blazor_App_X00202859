@@ -28,6 +28,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcU3BlY2llc1NlYXJjaEJhci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/ByClass.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCeUNsYXNzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/ByFamily.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCeUZhbWlseS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -78,6 +82,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/SpeciesList.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTcGVjaWVzTGlzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/SpeciesNoFilter.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTcGVjaWVzTm9GaWx0ZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/markm/College/CSHARP/Blazor_App_X00202859/application/Components/Pages/SpeciesSearch.razor]

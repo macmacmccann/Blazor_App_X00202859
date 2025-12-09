@@ -1,6 +1,8 @@
 wwwroot\bootstrap\bootstrap.min.css
 wwwroot\bootstrap\bootstrap.min.css.map
+wwwroot\css\app.css
 wwwroot\favicon.png
+wwwroot\images\1.gif
 wwwroot\images\back.gif
 wwwroot\images\background.gif
 wwwroot\images\backgroundBlur.gif
@@ -18,4 +20,3 @@ wwwroot\images\iconleaf.gif
 wwwroot\images\leaf.gif
 wwwroot\images\text.gif
 wwwroot\images\unrecordedAsOfNow.jpg
-wwwroot\css\app.css

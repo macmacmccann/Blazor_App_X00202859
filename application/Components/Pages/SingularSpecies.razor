@@ -23,16 +23,13 @@
 
 
 
+@if (selectedspecies is not null)
 
-@if (!string.IsNullOrWhiteSpace(wikiExtract))
 {
     <div class="container">
         <div class="row">
 
             <div class="col">
-
-
-
 
                 @if (!string.IsNullOrEmpty(@wikiImage))
                 {
@@ -61,14 +58,9 @@
                 {
                     <div class="explainNicely">
 
-
-
-                 
-
-                    <NavLink href=@($"/rankdescription/{selectedspecies.familykey}")>
+                    <NavLink href=@($"/rankdescription/{selectedspecies.family}/{@selectedspecies.familykey}")>
                         <h3> Family : @selectedspecies.family </h3>
                     </NavLink>
-                    <h3> @selectedspecies.vernacularName  </h3>
 
                     <h3> Kingdom : @selectedspecies.kingdom </h3>
                     <h3> Phylum : @selectedspecies.phylum  </h3>
@@ -76,14 +68,6 @@
                     <h3> Order : @selectedspecies.order </h3>
                     <h3> Family : @selectedspecies.family </h3>
                     <h3> Genus : @selectedspecies.genus </h3>
-
-
-
-
-
-
-
-
                     </div>
                     <br />
 
@@ -125,7 +109,7 @@
     </div>
 }
 
-
+<br />
 
 
 <ul class="gridlist">

@@ -33,6 +33,8 @@ public class Species
     public int? subspecieskey { get; set; }
     public int? nubkey { get; set; }
 
+    public int? classkey { get; set; }
+
     public List<VernacularNames>? vernacularNames { get; set; }
 
     public class VernacularNames

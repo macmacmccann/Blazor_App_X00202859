@@ -1,0 +1,92 @@
+﻿@page "/byclass"
+@rendermode InteractiveServer
+@inject HttpClient Http
+@using application.Components
+@using application.Components.Layout
+@inject application.Services.SpeciesService SpeciesService;
+@inject application.Services.WikipediaService WikipediaService;
+@inject application.Services.StateManagement stateof;
+
+
+<button class="back" onclick="history.back()">  ⇠ BACK </button>
+
+
+
+<div class="explainNicely">
+    <h1> EXPLORE THE classes OF THE BIOLOGICAL CLASSIFICATION RANKS </h1>
+</div>
+<br />
+
+<button class="api" @onclick="LoadNextPage">Retrieve more sample data from the API to gain more accuracy</button>
+
+
+
+<ul class="gridlist">
+    @foreach (var s in stateof.filteredfamily)
+    {
+        <li class="list">
+
+            <NavLink href=@($"/rankdescription/{s.classOfSpecies}/{s.classkey}")>
+                @s.family
+            </NavLink>
+        </li>
+    }
+</ul>
+
+
+@code {
+    private int offset = 0;
+    private const int pageSize = 1000;
+    private HashSet<string> shownClasses = new();
+    // List<Species> filteredfamily = new();
+
+
+    List<Species> classlist= new();
+
+
+    // $"https://api.gbif.org/v1/species/{key}/children" eg., key 1 lists all phyum under animalia
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadNextPage();
+
+
+    }
+
+
+
+    private async Task LoadNextPage()
+    {
+     
+
+        var url = $"https://api.gbif.org/v1/species/search?rank=SPECIES&limit={pageSize}&offset={offset}";
+
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>(url);
+
+        classlist = response?.results
+        .Where(s => !string.IsNullOrWhiteSpace(s.classOfSpecies))
+        .GroupBy(s => s.classOfSpecies)
+        .Select(g => g.First())
+        .ToList() ?? new();
+
+        offset += pageSize;
+
+
+
+
+        foreach (var s in classlist)
+        {
+
+            if (shownClasses.Add(s.family!))
+            {
+                stateof.filteredfamily.Add(s);
+            }
+        }
+        await InvokeAsync(StateHasChanged);
+
+
+    }
+
+}

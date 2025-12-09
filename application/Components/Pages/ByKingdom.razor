@@ -8,8 +8,10 @@
 <button class="back" onclick="history.back()">  ⇠ BACK </button>
 
 
-<h3>Kingdom</h3>
-
+<div class="explainNicely">
+    <h1> EXPLORE THE KINGDOMS OF THE BIOLOGICAL CLASSIFICATION RANKS </h1>
+</div>
+<br />
 
 
 
@@ -40,11 +42,13 @@
     protected override async Task OnInitializedAsync()
     {
         var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=KINGDOM&status=ACCEPTED&limit=100");
-      //  kingdom = response?.results ?? new List<Species>();
+        //  kingdom = response?.results ?? new List<Species>();
 
         kingdom = response?.results
         .GroupBy(s => s.kingdom)
         .Select(g => g.First())
         .ToList() ?? new();
+
+
     }
 }

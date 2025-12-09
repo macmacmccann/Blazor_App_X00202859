@@ -5,20 +5,19 @@
 @using application.Components
 @inject application.Services.WikipediaService WikipediaService;
 
-
 <button class="back" onclick="history.back()">  ⇠ BACK </button>
 
+    <div class="explainNicely">
 <h1> @selectedRank</h1>
+</div>
+<br />
 
 
-@if (!string.IsNullOrWhiteSpace(wikiExtract))
+@if (selectedRank is not null ) 
 {
     <div class="container">
         <div class="row">
-
             <div class = "col">
-
-
                 @if (!string.IsNullOrEmpty(@wikiImage))
                 {
                     <img class="profileof" src="@wikiImage" />
@@ -40,12 +39,11 @@
 
 
 
-
-         
-
-
             <div class="col">
+                <div class="explainNicely">
+
                 <p class="extract">@wikiExtract</p>
+                </div>
             </div>
 
 
@@ -54,6 +52,35 @@
 }
 
 
+<div class="explainNicely">
+
+    @if (selectedRank is not null)
+    {
+  
+        <h3> You are @countOfBranch steps down the tree of life.  </h3>
+        @if (currentSpecies is not null) {  <h3> Kingdom : @currentSpecies.kingdom  </h3>  }
+        //@if (currentSpecies.phylum is not null) {  <h3> phyluM : @currentSpecies.phylum  </h3>  }
+        //@if (currentSpecies.classOfSpecies is not null) {  <h3> Class : @currentSpecies.classOfSpecies  </h3>  }
+        //@if (currentSpecies.family is not null) {  <h3> Family : @currentSpecies.family  </h3>  }
+        //@if (currentSpecies.genus is not null) {  <h3> Genus : @currentSpecies.genus  </h3>  }
+
+
+
+     
+    }
+    else
+    {
+        <p> </p>
+    }
+
+</div>
+
+@if (currentSpecies is not null)
+{
+    <div class="explainNicely">
+        <h3> Find out more about descendants below : @currentSpecies.numDescendants  </h3>
+    </div>
+}
 
 
 
@@ -73,7 +100,7 @@
 
 </ul>
 
-
+<h1> EXPLORE SPECIES THAT ARE BETTER RECORD </h1>
 
 <ul class="gridlist">
     @foreach (var s in SpeciesService.species.Where(s => !string.IsNullOrEmpty(s.wikiImage)))
@@ -101,21 +128,8 @@
 
     private string? wikiImage;
     private string? wikiExtract;
+    private int countOfBranch;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await SpeciesService.LoadSpeciesAsync(Http);
-
-        var url = $"https://api.gbif.org/v1/species/search?rank=SPECIES&highertaxonKey={rankKey}&limit=1000"; //familykey eg 7787
-        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>(url);
-        nestedspecies = response?.results ?? new List<Species>();
-
-
-        var (image, extract) = await WikipediaService.GetInfoAsync(selectedRank);
-
-        wikiImage = image;
-        wikiExtract = extract;
-    }
 
 
 
@@ -130,17 +144,46 @@
 
     // private string realname = currentSpecies.vernacularName;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await SpeciesService.LoadSpeciesAsync(Http);
+
+        var url = $"https://api.gbif.org/v1/species/search?rank=SPECIES&highertaxonKey={rankKey}&limit=1000"; //familykey eg 7787
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>(url);
+        nestedspecies = response?.results ?? new List<Species>();
+
+
+        var (image, extract) = await WikipediaService.GetInfoAsync(selectedRank);
+
+        wikiImage = image;
+        wikiExtract = extract;
+
+
+        //currentSpecies = response?.results ?? Species;
+        
+        var urlForcurrentspecies = $"https://api.gbif.org/v1/species/{rankKey}";
+        currentSpecies = await Http.GetFromJsonAsync<Species>(urlForcurrentspecies);
+
+    }
+
+
+
 
 
 
     protected override void OnParametersSet()
 
     {
-        if (SpeciesService.species?.Any() == true) // null check
-        {
-            currentSpecies = SpeciesService.species.FirstOrDefault(s => s.scientificName == selectedRank); //returnas the first that equals such
 
-        }
+
+        if (!string.IsNullOrEmpty(currentSpecies?.kingdom)) countOfBranch++; //maybe null so ? 
+        if (!string.IsNullOrEmpty(currentSpecies?.phylum)) countOfBranch++;
+        if (!string.IsNullOrEmpty(currentSpecies?.classOfSpecies)) countOfBranch++;
+        if (!string.IsNullOrEmpty(currentSpecies?.order)) countOfBranch++;
+        if (!string.IsNullOrEmpty(currentSpecies?.family)) countOfBranch++;
+        if (!string.IsNullOrEmpty(currentSpecies?.genus)) countOfBranch++;
+
+
     }
 
 }

@@ -9,12 +9,20 @@
 
 <button class="back" onclick="history.back()">  ⇠ BACK </button>
 
-<h3>SpeciesList</h3>
+<button class="api" @onclick="LoadNextPage">Retrieve more sample data from the API to gain more accuracy</button>
 
 
+<div class="explainNicely">
+    <h1> EXPLORE THE SPECIES OF THE BIOLOGICAL CLASSIFICATION RANKS </h1>
+</div>
+<div class="explainNicely">
+    <h1> only WITH GOOD RECORDINGS  </h1>
+</div>
+
+<br />
 
     <ul class= "gridlist">
-    @foreach (var s in SpeciesService.species.Where(s => !string.IsNullOrEmpty(s.wikiImage)))
+    @foreach (var s in filteredspecies.Where(s => !string.IsNullOrEmpty(s.wikiImage)))
         {
             <li class="list">
                 <NavLink href=@($"/speciesdescription/{s.scientificName}/{s.key}")>
@@ -29,21 +37,68 @@
 
 @code {
 
+
     private Species? currentSpecies;
 
     private string? wikiImage;
     private string? wikiExtract;
 
+
+    private int offset = 0;
+    private const int pageSize = 1000;
+    private HashSet<string> shownSpecies = new();
+    List<Species> filteredspecies = new();
+
+
+    List<Species> species = new();
+
+
     protected override async Task OnInitializedAsync()
     {
-        await SpeciesService.LoadSpeciesAsync(Http);
-        await SpeciesService.PopulateWithWikipedia(WikipediaService);
+        await LoadNextPage();
+ 
 
     }
-    //Scoped method non global api call 
-        //var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=40");
-        //species = response?.results ?? new List<Species>();
- 
+
+    private async Task LoadNextPage()
+    {
+
+        var url = $"https://api.gbif.org/v1/species/search?rank=SPECIES&limit={pageSize}&offset={offset}";
+
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>(url);
+
+        species = response?.results
+        .Where(s => !string.IsNullOrWhiteSpace(s.scientificName))
+        .GroupBy(s => s.scientificName)
+        .Select(g => g.First())
+        .ToList() ?? new();
+
+        offset += pageSize;
+
+        foreach (var s in species)
+        {
+
+            if (shownSpecies.Add(s.scientificName!))
+            {
+                filteredspecies.Add(s);
+            }
+        }
+
+        await SpeciesService.PopulateWithWikipediaGlobally(
+        WikipediaService,
+        filteredspecies
+        );
+        await InvokeAsync(StateHasChanged);
+
+
+    }
+
+
+
+
+
+
+
 
     
 

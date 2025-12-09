@@ -233,6 +233,9 @@ body {
 .extract {
     font-size: larger;
     font-weight: bolder;
+    max-height: 450px; /* or any height you like */
+    overflow-y: auto; /* vertical scrollbar when needed */
+  
 }
 .profileof{
     border-radius:10px;
@@ -253,6 +256,7 @@ body {
 }
 
 .explainNicely {
+    display:flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;

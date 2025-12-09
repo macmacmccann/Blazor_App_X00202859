@@ -10,65 +10,97 @@
 
 <button class="back" onclick="history.back()">  ⇠ BACK </button>
 
+    <div class="explainNicely">
 <h1> @selectedName</h1>
+</div>
+<br />
 
 
 
 
-@if (!string.IsNullOrWhiteSpace(wikiExtract))
+
+
+@if (currentSpecies is not null)
+
 {
     <div class="container">
         <div class="row">
 
             <div class="col">
-                <img class="profileof" src="@wikiImage" />
 
-            </div>
+                @if (!string.IsNullOrEmpty(@wikiImage))
+                {
+                    <img class="profileof" src="@wikiImage" />
+
+                }
+                else
+                {
+                    <img class="profileof" src="/images/frown.jpg" />
+                    <div class="noimage">
+                    <h3> Still no real records on the web ! Be the first to document it !</h3>
+
+                    </div>
+
+                }
+              
+                </div>
             <div class="col">
-                <p class="extract">@wikiExtract</p>
-            </div>
+                <div class="explainNicely">
 
+                    <p class="extract">@wikiExtract</p>
+                </div>
+            </div>
 
         </div>
     </div>
 }
 
 
-    @if (currentSpecies is not null)
-    {
-        <h3> @currentSpecies.vernacularName  </h3>
+
+    <div class="explainNicely">
+
+        @if (currentSpecies is not null)
+        {
+            <h3> @currentSpecies.vernacularName  </h3>
 
             <h1> @currentSpecies.scientificName</h1>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <h3> Kingdom : @currentSpecies.kingdom </h3>
-        <h3> Phylum : @currentSpecies.phylum  </h3>
-        <h3> Canonical Name : @currentSpecies.canonicalName  </h3>
+            <h3> Kingdom : @currentSpecies.kingdom </h3>
+            <h3> Phylum : @currentSpecies.phylum  </h3>
+            <h3> Canonical Name : @currentSpecies.canonicalName  </h3>
 
-        <h3> Family : @currentSpecies.family  </h3>
-        @if(currentSpecies.status is not null)
-        {<h3> Status : @currentSpecies.status  </h3>
-        } else { <h3> Current status unknown </h3> }
-        <h3> Number of known descendants of this kingdom : @currentSpecies.numDescendants  </h3>
+            <h3> Family : @currentSpecies.family  </h3>
+            @if (currentSpecies.status is not null)
+            {
+                <h3> Status : @currentSpecies.status  </h3>
+            }
+            else
+            {
 
-    }
-    else
-    {
-        <p> Species details not fully recorded </p>
-    }
+                <h3> Current status unknown </h3>
+            }
 
- 
+        }
+        else
+        {
+            <p> Species details not fully recorded </p>
+        }
+
+    </div>
+
+@if (currentSpecies is not null)
+{
+    <div class="explainNicely">
+<h3> Find out more about descendants below : @currentSpecies.numDescendants  </h3>
+  </div>
+}
+
 
 <ul class="gridlist">
     @foreach (var s in nestedspecies )
     {
    
         <li class="list">
-            <NavLink href=@($"/singularspecies/{s.canonicalName}/{s.key}")>
+            <NavLink href=@($"/singularspecies/{s.canonicalName}/{s.key}/{s.canonicalName}")>
                 @s.canonicalName
             </NavLink>
 
@@ -77,10 +109,6 @@
     }
 
 </ul>
-
-
-
-
 
 <ul class="gridlist">
     @foreach (var s in SpeciesService.species.Where(s => !string.IsNullOrEmpty(s.wikiImage)))
