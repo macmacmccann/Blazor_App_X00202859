@@ -1,19 +1,39 @@
 ﻿@page "/speciesdescription"
 @page "/speciesdescription/{selectedName}/{taxonkey}"
+@rendermode InteractiveServer
 @inject application.Services.SpeciesService SpeciesService;
 @inject HttpClient Http
 @using application.Components
 @inject application.Services.WikipediaService WikipediaService;
 
 
+
+<button class="back" onclick="history.back()">  ⇠ BACK </button>
+
 <h1> @selectedName</h1>
+
+
 
 
 @if (!string.IsNullOrWhiteSpace(wikiExtract))
 {
-<img src="@wikiImage" class="image" />
-<p>@wikiExtract</p>
+    <div class="container">
+        <div class="row">
+
+            <div class="col">
+                <img class="profileof" src="@wikiImage" />
+
+            </div>
+            <div class="col">
+                <p class="extract">@wikiExtract</p>
+            </div>
+
+
+        </div>
+    </div>
 }
+
+
 
 
     @if (currentSpecies is not null)

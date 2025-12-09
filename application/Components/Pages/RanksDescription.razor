@@ -6,13 +6,27 @@
 @inject application.Services.WikipediaService WikipediaService;
 
 
+<button class="back" onclick="history.back()">  ⇠ BACK </button>
+
 <h1> @selectedRank</h1>
 
 
 @if (!string.IsNullOrWhiteSpace(wikiExtract))
 {
-    <img src="@wikiImage" class="image" />
-    <p>@wikiExtract</p>
+    <div class="container">
+        <div class="row">
+
+            <div class = "col">
+                <img class="profileof" src="@wikiImage" />
+
+            </div>
+            <div class="col">
+                <p class="extract">@wikiExtract</p>
+            </div>
+
+
+        </div>
+    </div>
 }
 
 
@@ -24,7 +38,7 @@
 }
 else
 {
-    <p> Details not fully recorded </p>
+    <p> Details of this rank are not fully recorded with relevant information . See below the specific species of this rank to get a further view </p>
 }
 
 
@@ -34,8 +48,8 @@ else
     {
 
         <li class="list">
-            <NavLink href=@($"/singularspecies/{s.canonicalName}/{s.key}")>
-                @s.canonicalName
+            <NavLink href=@($"/singularspecies/{s.species}/{s.key}/{selectedRank}")>
+                @s.species
             </NavLink>
 
 
@@ -46,14 +60,13 @@ else
 
 
 
-
-
 <ul class="gridlist">
     @foreach (var s in SpeciesService.species.Where(s => !string.IsNullOrEmpty(s.wikiImage)))
     {
         <li class="list">
-            <NavLink href=@($"/speciesdescription/{s.scientificName}/{s.key}")>
-                @s.scientificName
+           
+            <NavLink href=@($"/speciesdescription/{s.species}/{s.key}{selectedRank}")>
+                @s.species
             </NavLink>
         </li>
     }
@@ -78,7 +91,8 @@ else
     {
         await SpeciesService.LoadSpeciesAsync(Http);
 
-        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>($"https://api.gbif.org/v1/species/search?rank=SPECIES&highertaxonKey={rankKey}&limit=100");
+        var url = $"https://api.gbif.org/v1/species/search?rank=SPECIES&highertaxonKey={rankKey}&limit=1000"; //familykey eg 7787
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>(url);
         nestedspecies = response?.results ?? new List<Species>();
 
 

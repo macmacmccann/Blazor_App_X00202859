@@ -1,9 +1,12 @@
 ﻿@page "/searchspecies"
+@rendermode InteractiveServer
+
 @inject HttpClient Http
 @using application.Components
 @using application.Components.Layout
 @inject application.Services.SpeciesService SpeciesService;
 
+<button class="back" onclick="history.back()">  ⇠ BACK </button>
 
 <h3>Discover species by their name </h3>
 
@@ -12,13 +15,18 @@
 
 
 
+
 @if (filteredSpecies?.Any() == true)
 {
 
-    <ul>
+    <ul class="searchresponse">
         @foreach (var s in filteredSpecies)
         {
-            <li> (@s.vernacularName)</li>
+
+            <NavLink href=@($"/speciesdescription/{s.canonicalName}/{s.key}")>
+                <li> @s.canonicalName <br /> @s.vernacularName</li>
+
+            </NavLink>
         }
     </ul>
 }
@@ -27,10 +35,20 @@ else
     <p> No species matching species found </p>
 }
 
+    <ul class="guidelines">
+    <h1> Example species to search </h1>
+
+    <li>  tardigrade brings one result </li>
+    <li>  tard brings back four matches as contains the subsection </li>
+    <li>  Water OR 'water bear' brings back tardigrade aswell as its another name for it  </li>
+
+    </ul>
+
+
 
 @code {
-    List<Species> species = new();
-    List<Species> filteredSpecies = new();
+        List<Species> species = new();
+        List<Species> filteredSpecies = new();
     // filteredSpecies.Clear();
 
 
@@ -38,10 +56,12 @@ else
 
     private async Task HandleSpeciesSearch(string searchText)
 
-    {       
+    {
+
+        currentSearch = currentSearch.Trim();
         currentSearch = searchText;
 
-        filteredSpecies = species.Where(s => !string.IsNullOrEmpty(s.vernacularName) && s.vernacularName.Contains(currentSearch, StringComparison.OrdinalIgnoreCase)).ToList();
+        //filteredSpecies = species.Where(s => !string.IsNullOrEmpty(s.species) && s.species.Contains(currentSearch, StringComparison.OrdinalIgnoreCase)).ToList();
 
 
         if (string.IsNullOrWhiteSpace(currentSearch))
@@ -50,10 +70,21 @@ else
         }
         else
         {
-            filteredSpecies = species.Where(s => !string.IsNullOrEmpty(s.vernacularName) && s.vernacularName.Contains(currentSearch, StringComparison.OrdinalIgnoreCase)).ToList();
+            filteredSpecies = species.Where(s =>
+             (!string.IsNullOrEmpty(s.canonicalName) &&
+             s.canonicalName.Contains(currentSearch, StringComparison.OrdinalIgnoreCase))
+             ||
+             (!string.IsNullOrEmpty(s.vernacularName) &&
+             s.vernacularName.Contains(currentSearch, StringComparison.OrdinalIgnoreCase))
+             ||
+             (!string.IsNullOrEmpty(s.scientificName) &&
+             s.scientificName.Contains(currentSearch, StringComparison.OrdinalIgnoreCase)))
+             .ToList();
 
-
+     
         }
+
+    
 
         await InvokeAsync(StateHasChanged);
     }
@@ -61,7 +92,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         Console.WriteLine("Loaded");
-        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=300");
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=1000");
         species = response?.results ?? new List<Species>();
         // filteredSpecies = new List<Species>(species);  //initally show all
 

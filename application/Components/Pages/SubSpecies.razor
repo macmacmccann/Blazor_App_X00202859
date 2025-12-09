@@ -1,0 +1,60 @@
+﻿@page "/subspecies"
+@page "/subspecies/{species}/{key}/{selectedRank}"
+
+
+@rendermode InteractiveServer
+
+@inject HttpClient Http
+@using application.Components
+@using application.Components.Layout
+@inject application.Services.SpeciesService SpeciesService;
+@inject application.Services.WikipediaService WikipediaService;
+
+<button class="back" onclick="history.back()">  ⇠ BACK </button>
+
+
+@if (selectedspecies is not null)
+{
+    <div class="explainNicely"> 
+    <h1> @selectedspecies.scientificName</h1>
+    <br /><br />
+    <h6> Explanation of subspecies name in the api </h6>
+    <p> The Barcode of Life Data System (commonly known as BOLD or BOLDSystems) is a web platform specifically devoted to DNA barcoding.[1][2] It is a cloud-based data storage and analysis platform developed at the Centre for Biodiversity Genomics in Canada. It consists of four main modules, a data portal, an educational portal, a registry of BINs (putative species), and a data collection and analysis workbench which provides an online platform for analyzing DNA sequences.[2] Since its launch in 2005, BOLD has been extended to provide a range of functionality including data organization, validation, visualization and publication. The most recent version of the system, version 5, launched in 2024. Version 4, launched in 2017, brought a set of improvements supporting data collection and analysis but also included novel functionality improving data dissemination, citation, and annotation.[3] Before November 16, 2020, BOLD already contained barcode sequences for 318,105 formally described species covering animals, plants, fungi, protists (with ~8.9 million specimens).[4]</p>
+    <p> The name of the code comes from the barcode of life data system - bold . It differntiates different species </p>
+    <href> https://en.wikipedia.org/wiki/Barcode_of_Life_Data_System  </href>
+    <href> https://boldsystems.org/ </href>
+    <h3> No descendants: There is no further to go in the database in this direction  </h3>
+    </div>
+}
+else
+{
+    <button class="back" onclick="history.back()">  ⇠ BACK </button>
+
+}
+
+
+
+
+
+@code {
+
+    [Parameter]
+    public string? key { get; set; }
+    [Parameter]
+    public string? species { get; set; }
+    [Parameter]
+    public string? selectedRank { get; set; }
+
+    private Species? selectedspecies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // list of sub from key https://api.gbif.org/v1/species/{key}/children
+        // wont work on this code as its asking for one species need a for loop 
+        var url = $"https://api.gbif.org/v1/species/{key}";    //10097921
+
+        selectedspecies = await Http.GetFromJsonAsync<Species>(url);
+
+
+    }
+}

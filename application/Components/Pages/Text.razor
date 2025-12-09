@@ -1,0 +1,17 @@
+﻿@page "/test"
+@rendermode InteractiveServer
+
+<h1>Button Test</h1>
+
+<button @onclick="ClickMe">Click Me</button>
+
+<p>Clicked: @count</p>
+
+@code {
+    int count = 0;
+
+    void ClickMe()
+    {
+        count++;
+    }
+}

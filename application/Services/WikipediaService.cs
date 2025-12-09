@@ -19,12 +19,38 @@
         }
 
         //return image url and extracted text for given name 
-        public async Task<(string imageUrl,string extract)> GetInfoAsync(string scientificName)
+        public async Task<(string imageUrl, string extract)> GetInfoAsync(Species s)
         {
 
-            // Safety check for empty input 
-            if (string.IsNullOrEmpty(scientificName))
-                return ("", "");
+            var names = new List<string?>
+            {
+                s.scientificName,
+                s.canonicalName,
+                s.vernacularName
+            };
+
+            foreach (var name in names)
+            {
+                if (string.IsNullOrWhiteSpace(name))
+                    continue;
+
+              var result = await GetInfoAsync(name);
+
+                        if (!string.IsNullOrEmpty(result.imageUrl) ||
+                            !string.IsNullOrEmpty(result.extract))
+                        {
+                            return result;
+                        }
+
+            }
+
+            return ("", "");
+
+        }
+
+        public async Task<(string imageUrl, string extract)> GetInfoAsync(string title) { 
+
+
 
             string url =
                 "https://en.wikipedia.org/w/api.php" + // the api 
@@ -36,7 +62,8 @@
                 "&piprop=thumbnail" +                  //include thumbnauil info  
                 "&pithumbsize=600" +                   //thumbnail size 
                 "&origin=*" +                            // wikpedia cors requirement 
-                $"&titles={Uri.EscapeDataString(scientificName)}"; //page name eg., chordata 
+                $"&redirects=1" +                         //allows redirect
+                $"&titles={Uri.EscapeDataString(title)}"; //page name eg., chordata 
 
             // Now actually request the data and use 
 

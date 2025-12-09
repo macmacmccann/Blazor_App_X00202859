@@ -6,10 +6,10 @@
 
 <h3>SpeciesSearchBar</h3>
 
-<input type="text" placeholder="Search species by name" 
+<input class ="search" type="text" placeholder="Search species by name" 
     @bind="SearchText" 
     @bind:event="oninput" />
-<button @onclick="OnSearchClicked"> Search </button>
+<button class="searchbutton" @onclick="OnSearchClicked"> Search </button>
 
 
 @code {

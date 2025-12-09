@@ -5,6 +5,8 @@
 @inject application.Services.WikipediaService WikipediaService;
 
 
+<button class="back" onclick="history.back()">  ⇠ BACK </button>
+
 @if (currentSpecies is not null)
 {
      <h1> @currentSpecies.scientificName</h1>

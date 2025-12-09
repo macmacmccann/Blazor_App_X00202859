@@ -1,49 +1,98 @@
 ﻿@page "/byfamily"
+@rendermode InteractiveServer
 @inject HttpClient Http
 @using application.Components
 @using application.Components.Layout
 @inject application.Services.SpeciesService SpeciesService;
 @inject application.Services.WikipediaService WikipediaService;
+@inject application.Services.StateManagement stateof;
+
+
+<button class="back" onclick="history.back()">  ⇠ BACK </button>
 
 
 
 <h3>FAMILies</h3>
 
-
+<button class="api" @onclick="LoadNextPage"> Retrieve more sample data from the API to gain more accuracy </button>
 
 
 
 <ul class="gridlist">
-    @foreach (var s in family)
+    @foreach (var s in stateof.filteredfamily)
     {
-
         <li class="list">
 
-            <NavLink href=@($"/rankdescription/{s.canonicalName}/{s.key}")>
+            <NavLink href=@($"/rankdescription/{s.family}/{s.familykey}")>
                 @s.family
             </NavLink>
         </li>
     }
-
 </ul>
 
-@code {
 
+@code {
+    private int offset = 0;
+    private const int pageSize = 1000;
+    private HashSet<string> shownFamilies = new();
+    // List<Species> filteredfamily = new();
+
+
+
+    private int buttonworksifgoesup = 1;
 
     // $"https://api.gbif.org/v1/species/{key}/children" eg., key 1 lists all phyum under animalia
 
     List<Species> family = new();
 
 
-
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=GENUS&status=ACCEPTED&limit=100");
-        //  kingdom = response?.results ?? new List<Species>();
+        await LoadNextPage();
+
+
+    }
+
+
+
+    private async Task LoadNextPage()
+    {
+        /*buttonworksifgoesup += 1;
+        stateof.buttonCount++;
+        stateof.filteredfamily.Add(new Species {
+            key = 2242,
+            scientificName = "test",
+            canonicalName = "test",
+            family = $"TEST FAMILY {stateof.buttonCount}" }
+        );
+        */
+
+        var url = $"https://api.gbif.org/v1/species/search?rank=SPECIES&limit={pageSize}&offset={offset}";
+
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>(url);
 
         family = response?.results
+        .Where(s => !string.IsNullOrWhiteSpace(s.family))
         .GroupBy(s => s.family)
         .Select(g => g.First())
         .ToList() ?? new();
+
+        offset += pageSize;
+
+   
+
+
+        foreach (var s in family) 
+        {
+
+            if (shownFamilies.Add(s.family!))
+            {
+                stateof.filteredfamily.Add(s);
+            }
+        }
+        await InvokeAsync(StateHasChanged);
+
+
     }
+
 }

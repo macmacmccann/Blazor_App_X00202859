@@ -13,6 +13,8 @@ builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 builder.Services.AddScoped<SpeciesService>();
 builder.Services.AddScoped<WikipediaService>();
+builder.Services.AddScoped<StateManagement>();
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 
 builder.Services.AddCors(options =>
@@ -44,8 +46,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+
+
+
 
 app.Run();
 

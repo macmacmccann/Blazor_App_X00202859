@@ -1,10 +1,12 @@
-C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.exe
-C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.dll
-C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.pdb
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\appsettings.json
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.staticwebassets.runtime.json
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.staticwebassets.endpoints.json
+C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.exe
+C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.deps.json
+C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.runtimeconfig.json
+C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.dll
+C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.pdb
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\Supabase.Functions.dll
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\Supabase.Gotrue.dll
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
@@ -45,7 +47,5 @@ C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\obj\Debug\net8.0\
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\obj\Debug\net8.0\application.dll
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\obj\Debug\net8.0\refint\application.dll
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\obj\Debug\net8.0\application.pdb
-C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.deps.json
-C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\bin\Debug\net8.0\application.runtimeconfig.json
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\obj\Debug\net8.0\application.genruntimeconfig.cache
 C:\Users\markm\College\CSHARP\Blazor_App_X00202859\application\obj\Debug\net8.0\ref\application.dll

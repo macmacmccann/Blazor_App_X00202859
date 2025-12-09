@@ -1,57 +1,126 @@
-﻿
+﻿@rendermode InteractiveServer
 
 @page "/singularspecies"
-@page "/singularspecies/{selectedName}/{key}"
+@page "/singularspecies/{selectedName}/{key}/{selectedRank}"
 @inject HttpClient Http
 @using application.Components
 @using application.Components.Layout
 @inject application.Services.SpeciesService SpeciesService;
 @inject application.Services.WikipediaService WikipediaService;
 
-<button class="back" onclick="history.back">  ⇠ BACK </button>
+
+
+<button class="back" onclick="history.back()">  ⇠ BACK </button>
 
 <h3>@selectedName</h3>
 
-@if (selectedspecies is not null)
+
+
+@if (!string.IsNullOrWhiteSpace(wikiExtract))
 {
-    <h3> @selectedspecies.vernacularName  </h3>
+    <div class="container">
+        <div class="row">
 
-    <h3> Kingdom : @selectedspecies.kingdom </h3>
-    <h3> Phylum : @selectedspecies.phylum  </h3>
-    <h3> Class : @selectedspecies.classOfSpecies  </h3>
-    <h3> Order : @selectedspecies.order </h3>
-    <h3> Family : @selectedspecies.family </h3>
-    <h3> Genus : @selectedspecies.genus </h3>
+            <div class="col">
+                <img class="profileof" src="@wikiImage" />
 
-    <h3> Number of known descendants of this kingdom : @selectedspecies.numDescendants  </h3>
+            </div>
+            <div class="col">
 
+
+
+                @if (selectedspecies is not null)
+                {
+
+
+                    <NavLink href=@($"/rankdescription/{selectedspecies.familykey}")>
+                        <h3> Family : @selectedspecies.family </h3>
+                    </NavLink>
+                    <h3> @selectedspecies.vernacularName  </h3>
+
+                    <h3> Kingdom : @selectedspecies.kingdom </h3>
+                    <h3> Phylum : @selectedspecies.phylum  </h3>
+                    <h3> Class : @selectedspecies.classOfSpecies  </h3>
+                    <h3> Order : @selectedspecies.order </h3>
+                    <h3> Family : @selectedspecies.family </h3>
+                    <h3> Genus : @selectedspecies.genus </h3>
+
+
+
+
+                    <h3> Genus : @selectedspecies.genus </h3>
+
+                    <h3> Number of known descendants of this kingdom : @selectedspecies.numDescendants  </h3>
+
+                }
+                else
+                {
+                    <p> <br /> </p>
+                }
+
+
+
+            </div>
+
+
+        </div>
+    </div>
 }
-else
-{
-    <p> Species details not fully recorded </p>
-}
 
 
+<ul class="gridlist">
+    @foreach (var s in nestedspecies)
+    {
+        countOfSubSpecies += 1;
+        <li class="list">
+            <NavLink href=@($"/subspecies/{s.species}/{s.nubkey}/{selectedRank}")>
+                Direct child of @s.species Number : @countOfSubSpecies
+            </NavLink>
+
+
+        </li>
+    }
+
+</ul>
 
 
 
 @code {
     private Species? selectedspecies;
+    List<Species> nestedspecies = new();
+    int countOfSubSpecies = 1;
 
     [Parameter]
     public string? selectedName { get; set; }
     [Parameter]
     public string? key { get; set; }
+    [Parameter]
+    public string? selectedRank { get; set; }
+
+
+    private string? wikiImage;
+    private string? wikiExtract;
+
+
+
 
     protected override async Task OnInitializedAsync()
     {
         
-     
-
-
+    
         selectedspecies = await Http.GetFromJsonAsync<Species>($"https://api.gbif.org/v1/species/{key}");
 
+        var (image, extract) = await WikipediaService.GetInfoAsync(selectedRank);
 
+        wikiImage = image;
+        wikiExtract = extract;
+
+
+
+        var url = $"https://api.gbif.org/v1/species/{key}/children?"; //nullable might not ahve
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>(url);
+        nestedspecies = response?.results ?? new List<Species>();
+    }
 
     }
 

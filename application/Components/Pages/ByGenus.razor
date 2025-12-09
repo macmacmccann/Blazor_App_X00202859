@@ -1,25 +1,30 @@
 ﻿@page "/bygenus"
+@rendermode InteractiveServer
 @inject HttpClient Http
 @using application.Components
 @using application.Components.Layout
 @inject application.Services.SpeciesService SpeciesService;
 @inject application.Services.WikipediaService WikipediaService;
+@inject application.Services.StateManagement stateof;
 
 
 
-<h3>All Genus </h3>
+<button class="back" onclick="history.back()">  ⇠ BACK </button>
 
 
+<h3>GENUS </h3>
+
+<button class="api" @onclick="LoadNextPage"> Retrieve more sample data from the API to gain more accuracy </button>
 
 
 
 <ul class="gridlist">
-    @foreach (var s in genus)
+    @foreach (var s in stateof.filteredfamily)
     {
 
         <li class="list">
 
-            <NavLink href=@($"/rankdescription/{s.canonicalName}/{s.key}")>
+            <NavLink href=@($"/rankdescription/{s.genus}/{s.genuskey}")>
                 @s.genus
             </NavLink>
         </li>
@@ -27,7 +32,16 @@
 
 </ul>
 
+
+
 @code {
+    private int offset = 0;
+    private const int pageSize = 1000;
+    private HashSet<string> shownFamilies = new();
+    // List<Species> filteredfamily = new();
+
+
+
 
 
     // $"https://api.gbif.org/v1/species/{key}/children" eg., key 1 lists all phyum under animalia
@@ -35,15 +49,45 @@
     List<Species> genus = new();
 
 
-
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=KINGDOM&status=ACCEPTED&limit=100");
-        //  kingdom = response?.results ?? new List<Species>();
+        await LoadNextPage();
+
+
+    }
+
+
+
+    private async Task LoadNextPage()
+    {
+  
+
+        var url = $"https://api.gbif.org/v1/species/search?rank=SPECIES&limit={pageSize}&offset={offset}";
+
+        var response = await Http.GetFromJsonAsync<SpeciesSearchResponse>(url);
 
         genus = response?.results
+        .Where(s => !string.IsNullOrWhiteSpace(s.genus))
         .GroupBy(s => s.genus)
         .Select(g => g.First())
         .ToList() ?? new();
+
+        offset += pageSize;
+
+
+
+
+        foreach (var s in genus)
+        {
+
+            if (shownFamilies.Add(s.family!))
+            {
+                stateof.filteredfamily.Add(s);
+            }
+        }
+        await InvokeAsync(StateHasChanged);
+
+
     }
+
 }

@@ -10,7 +10,7 @@ namespace application.Services
 
         public async Task LoadSpeciesAsync(HttpClient http)
         {
-           var response = await http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=100");
+           var response = await http.GetFromJsonAsync<SpeciesSearchResponse>("https://api.gbif.org/v1/species?rank=SPECIES&limit=1000");
            species = response?.results ?? new List<Species>();
         }
 
@@ -21,7 +21,7 @@ namespace application.Services
             
             foreach(var s in species)
             {
-                var (image, extract) = await wiki.GetInfoAsync(s.scientificName);
+                var (image, extract) = await wiki.GetInfoAsync(s);
                 
                 s.wikiImage = image;
                 s.wikiExtract = extract;

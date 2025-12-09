@@ -7,7 +7,7 @@ public class Species
 {
     public required int key { get; set; }
     public required string scientificName { get; set; }
-    public required string canonicalName { get; set; }
+    public string? canonicalName { get; set; }
     //JsonPropertyName("vernacularName")] uncomment if its dif 
     public string? vernacularName { get; set; }  // laymans name used for search
     public string? kingdom { get; set; } // must contain null value when exiting construct
@@ -23,6 +23,15 @@ public class Species
     public int numDescendants { get; set; }
     public string? wikiImage { get; set; }
     public string? wikiExtract { get; set; }
+
+    //Api keys 
+
+    public int? familykey { get; set; }
+    public int? genuskey { get; set; }
+    public int? orderkey { get; set; }
+    [JsonPropertyName("Specieskey")]
+    public int? subspecieskey { get; set; }
+    public int? nubkey { get; set; }
 
     public List<VernacularNames>? vernacularNames { get; set; }
 
