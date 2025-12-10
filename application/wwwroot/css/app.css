@@ -256,6 +256,20 @@ body {
 }
 
 .explainNicely {
+
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    margin-top: 4%;
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    background-image: url("/images/text.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.explainNicelyimage {
     display:flex;
     justify-content: center;
     align-items: center;
@@ -267,6 +281,8 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+
 
 .noimage {
     justify-content: center;
