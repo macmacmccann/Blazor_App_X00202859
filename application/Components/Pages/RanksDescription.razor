@@ -40,10 +40,32 @@
 
 
             <div class="col">
-                <div class="explainNicely">
 
-                <p class="extract">@wikiExtract</p>
-                </div>
+                @if (!string.IsNullOrEmpty(@wikiExtract))
+                {
+                        <div class="explainNicely">
+
+                        <p class="extract">@wikiExtract</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="explainNicely">
+
+                    <p> This specific object ofthis rank does not have explanatory text in both apis. This may be due to its vague status and name </p>
+               </div>
+
+                    <div class="explainNicely">
+                            <h2> Please see other sites listed below for this specific rank </h2>
+                                <div class="noimage">
+
+                                    <a href="https://www.google.com/search?q=@selectedRank" target="_blank">
+                                            <h2> @selectedRank  </h2>
+                                    </a>
+                                    </div>
+                    </div>
+
+                }
             </div>
 
 
@@ -59,10 +81,10 @@
   
         <h3> You are @countOfBranch steps down the tree of life.  </h3>
         @if (currentSpecies is not null) {  <h3> Kingdom : @currentSpecies.kingdom  </h3>  }
-        //@if (currentSpecies.phylum is not null) {  <h3> phyluM : @currentSpecies.phylum  </h3>  }
-        //@if (currentSpecies.classOfSpecies is not null) {  <h3> Class : @currentSpecies.classOfSpecies  </h3>  }
-        //@if (currentSpecies.family is not null) {  <h3> Family : @currentSpecies.family  </h3>  }
-        //@if (currentSpecies.genus is not null) {  <h3> Genus : @currentSpecies.genus  </h3>  }
+        @if (@currentSpecies?.phylum is not null) {  <h3> phyluM : @currentSpecies.phylum  </h3>  }
+        @if (currentSpecies?.classOfSpecies is not null) {  <h3> Class : @currentSpecies.classOfSpecies  </h3>  }
+        @if (currentSpecies?.family is not null) {  <h3> Family : @currentSpecies.family  </h3>  }
+        @if (currentSpecies?.genus is not null) {  <h3> Genus : @currentSpecies.genus  </h3>  }
 
 
 
@@ -100,26 +122,19 @@
 
 </ul>
 
-<h1> EXPLORE SPECIES THAT ARE BETTER RECORD </h1>
 
 <ul class="gridlist">
     @foreach (var s in SpeciesService.species.Where(s => !string.IsNullOrEmpty(s.wikiImage)))
     {
         <li class="list">
            
-            <NavLink href=@($"/speciesdescription/{s.species}/{s.key}{selectedRank}")>
+            <NavLink href=@($"/speciesdescription/{s.species}/{s.key}/{selectedRank}")>
                 @s.species
             </NavLink>
         </li>
     }
 
 </ul>
-
-
-
-
-
-
 
 
 @code {
@@ -164,11 +179,9 @@
         var urlForcurrentspecies = $"https://api.gbif.org/v1/species/{rankKey}";
         currentSpecies = await Http.GetFromJsonAsync<Species>(urlForcurrentspecies);
 
+
+
     }
-
-
-
-
 
 
     protected override void OnParametersSet()

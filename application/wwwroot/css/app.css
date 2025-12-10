@@ -66,6 +66,11 @@ h1:focus {
     !important;
 }
 
+
+.gridlist {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
 ul.gridlist {
     display: grid;
     gap: 10px;
@@ -230,6 +235,10 @@ body {
     color:greenyellow;
 }
 
+p {
+    font-weight: bolder;
+}
+
 .extract {
     font-size: larger;
     font-weight: bolder;
@@ -253,6 +262,7 @@ body {
     background-image: url("/images/text.gif");
     background-repeat: no-repeat;
     background-size: cover;
+    margin-left:20%
 }
 
 .explainNicely {

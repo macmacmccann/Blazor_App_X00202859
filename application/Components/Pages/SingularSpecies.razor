@@ -63,29 +63,34 @@
 
                
 
-                    <h3> Kingdom : @selectedspecies.kingdom </h3>
-                        <NavLink href=@($"/rankdescription/{selectedspecies.kingdom}/{@selectedspecies.kingdom}")>
+                        <NavLink href=@($"/rankdescription/{selectedspecies.kingdom}/{selectedspecies.key}")>
+                            <h3> Kingdom : @selectedspecies.kingdom </h3>
+                        </NavLink>
+                        <NavLink href=@($"/rankdescription/{selectedspecies.phylum}/{selectedspecies.key}")>
+                            <h3> Phylum : @selectedspecies.phylum  </h3>
+                        </NavLink>
+                        <NavLink href=@($"/rankdescription/{selectedspecies.classOfSpecies}/{selectedspecies.key}")>
+                          
+                            <h3> Class : @selectedspecies.classOfSpecies  </h3>
+
+                        </NavLink>
+
+                        <NavLink href=@($"/rankdescription/{selectedspecies.order}/{selectedspecies.key}")>
+
+                            <h3> Order : @selectedspecies.order  </h3>
+
+                        </NavLink>
+
+                        <NavLink href=@($"/rankdescription/{selectedspecies.family}/{selectedspecies.key}")>
                             <h3> Family : @selectedspecies.family </h3>
                         </NavLink>
 
 
 
-                    <h3> Phylum : @selectedspecies.phylum  </h3>
-
-
-                    <h3> Class : @selectedspecies.classOfSpecies  </h3>
-
-
-                    <h3> Order : @selectedspecies.order </h3>
-
-
-                    <h3> Family : @selectedspecies.family </h3>
-                        <NavLink href=@($"/rankdescription/{selectedspecies.family}/{@selectedspecies.familykey}")>
-                            <h3> Family : @selectedspecies.family </h3>
+                        <NavLink href=@($"/rankdescription/{selectedspecies.genus}/{selectedspecies.key}")>
+                            <h3> Genus : @selectedspecies.genus </h3>
                         </NavLink>
 
-
-                    <h3> Genus : @selectedspecies.genus </h3>
                     </div>
                     <br />
 
@@ -99,7 +104,7 @@
 
 
             </div>
-
+            <br />
             @if (selectedspecies is not null){
 
                     @if (selectedspecies.numDescendants == 0)
@@ -113,8 +118,8 @@
                 }
                 else
                 {
-                    <br />
-
+                    
+                    <p>             </p>
                     <div class="explainNicely">
                         <h1> Find out more about descendants down below </h1>
                     </div>

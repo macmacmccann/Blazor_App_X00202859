@@ -18,5 +18,8 @@ wwwroot\images\Caldisphaera_files\frown.jpg
 wwwroot\images\frown.jpg
 wwwroot\images\iconleaf.gif
 wwwroot\images\leaf.gif
+wwwroot\images\life.png
+wwwroot\images\phylum.jpg
+wwwroot\images\rankpic.jpg
 wwwroot\images\text.gif
 wwwroot\images\unrecordedAsOfNow.jpg
